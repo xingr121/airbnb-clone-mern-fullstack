@@ -1,0 +1,460 @@
+Daily Scrum Meeting
+
+<< current date goes here >>
+1. What I have done / not done since last Scrum?
+2. What I plan to do from this scrum to next? (next 24 hours)
+3. Where do I need assistance? What do I need to figure out?
+
+----------------------------------------------------------------------------------------------
+2024/04/03 Bo Kyung
+1. Done since last scrum
+- Setup database structure
+- Created ERD diagram
+2. Plan until next Scrum
+- Search tutorials for React Booking application
+- Create user stories
+3. Need assistance / figure things out
+
+2024/04/03 Mark 
+1. Done since last scrum
+- Create mockup page
+2. Plan until next Scrum
+- Create a Static Front-End design in React using Tailwind.css library
+3. Need assistance / figure things out
+- Research Documentation of tailwind.css
+
+2024/04/03 Michael
+1. Done since last scrum
+- Helped with the project overview portion of the project proposal 
+2. Plan until next Scrum
+- Watch tutorials related to DynamoDB, Dynamoose, and Hosting using Heroku 
+3. Need assistance / figure things out 
+- Difficulty knowing where to start for the actual implementation of the project
+
+2024/04/03 SangKyu
+1. Done since last scrum
+- Prepared Use Case diagram.
+- Searched for information in Jira and CI/CD.
+2. Plan until next Scrum
+- Serach for information for CI/CD.
+- Set up CI/CD environment.
+3. Need assistance / figure things out 
+- Find out how to setup CI/CD environment.
+
+2024/04/03 Xing
+1. Done since last scrum
+- prepared part of project proposal
+- watched some tutorals on Jira 
+2. Plan until next Scrum
+- improve proposal accoring teacher's advices
+- do some experimatation on JIra and try to set up project Jira 
+3. Need assistance / figure things out
+- need to see some tutorials about Jira
+----------------------------------------------------------------------------------------------
+2024/04/04 Bo Kyung
+1. Done since last scrum
+- Created user stories for the application
+- Discussed project planning with teammates
+- Searched tutorials for the airbnb clone.
+2. Plan until next Scrum
+- Compare some tutorials and share the best examples 
+- Create DailyScrums file and share in the github.
+3. Need assistance / figure things out
+- need to divide tasks and start project
+
+2024/04/04 Mark 
+1. Done since last scrum
+- Research and Using Tailwindcss
+2. Plan until next Scrum
+- Create a template of the web app using bootstrap
+3. Need assistance / figure things out
+
+2024/04/04 Michael
+1. Done since last scrum
+- Some research on deployment, MongoDB and MongoDB Atlas. Obtained connection string for Atlas free tier cloud.
+2. Plan until next Scrum
+- Set up Mongoose or Prism installation and create the models for our database on our server side. Also more research on deployment.
+3. Need assistance / figure things out
+- NoSQL functions differently than SQL and making the models for the first time will completely new.
+
+2024/04/04 SangKyu
+1. Done since last scrum
+- Searched for information in MongoDB and CI/CD.
+2. Plan until next Scrum
+- Search for information for CI/CD.
+- Set up CI/CD environment.
+3. Need assistance / figure things out
+- Find out how to setup CI/CD environment.
+
+2024/04/04 Xing
+1. Done since last scrum
+- setup Jira for project
+- did some research and watched some tutorals 
+- discussed project planning with team 
+2. Plan until next Scrum
+- some more research for implementing project
+- start project 
+3. Need assistance / figure things out
+----------------------------------------------------------------------------------------------
+2024/04/05 Bo Kyung
+1. Done since last scrum
+- Searched some tutorials for airbnb clone project and watched some videos.
+- Watched MongoDB tutorial and setup the MongoDB
+2. Plan until next Scrum
+- Start coding "Host can create/edit/delete listings" part.  
+3. Need assistance / figure things out 
+- N/A
+
+2024/04/05 Mark
+1. Done since last scrum
+- Create Listing/Home Interface
+2. Plan until next Scrum
+- Create Register/ Login, ListingDetails Interface, CRUD Interface for Host
+3. Need assistance / figure things out 
+- N/A
+
+2024/04/05 Michael
+1. Done since last scrum
+- Created models on the server side using Mongoose for our database 
+2. Plan until next Scrum
+- Get our web app hosted 
+3. Need assistance / figure things out 
+- Unforseen issues or difficulty understanding Heroku documentation
+
+2024/04/05 SangKyu
+1. What I have done / not done since last Scrum?
+- Created EC2 instance and Installed Jenkins.
+- Searched for information on CI/CD.
+2. What I plan to do from this scrum to next? (next 24 hours)
+- Serach for information on Pipeline and webhook settings.
+- Set up CI/CD environment.
+3. Where do I need assistance? What do I need to figure out?
+- Need to figure out how to set up CI/CD environment.
+
+2024/04/05 Xing
+1. Done since last scrum
+- researched and watched some tutorials 
+2. Plan until next Scrum
+- start to implementing project on login and register
+3. Need assistance / figure things out
+- N/A
+----------------------------------------------------------------------------------------------
+2024/04/08 Bo Kyung
+1. Done since last scrum
+- Created Create Listing page 
+2. Plan until next Scrum
+- Working on the backend for the Create Listing page 
+3. Need assistance / figure things out 
+- Need to understand about react-redux
+
+2024/04/08 Mark
+1. Done since last scrum
+- Created Profile, Single listing and host listings option to update/delete/view
+2. Plan until next Scrum
+- Continue with single listing (Review, Maps, Calendar, Amenities)
+3. Need assistance / figure things out 
+- N/A
+
+2024/04/08 Michael
+1. Done since last scrum
+- Deployed both the client and server using Heroku
+2. Plan until next Scrum
+- View dynamically listings on the main page
+3. Need assistance / figure things out 
+- Pulling images will be difficult, we will have to figure out how to do that
+
+2024/04/08 SangKyu
+1. What I have done / not done since last Scrum?
+- Created EC2 instance and Installed Sonarqube.
+- Searched for information on Pipeline and webhook settings.
+2. What I plan to do from this scrum to next? (next 24 hours)
+- Setup the pipeline, webhook 
+- Integrate Github, Jenkins, Sonarqube
+3. Where do I need assistance? What do I need to figure out?
+- Need to figure out how to integrate sonarqube, docker to the CI/CD process.
+
+2024/04/08 Xing
+1. Done since last scrum
+- intergrated Auth0 API and implemented login, register and logout 
+2. Plan until next Scrum
+- write user info to mongo DB
+3. Need assistance / figure things out
+- N/A
+----------------------------------------------------------------------------------------------
+2024/04/09 Bo Kyung
+1. Done since last scrum
+- Re-structure Creating Listing code
+2. Plan until next Scrum
+- Continue to work Creating Listing code
+3. Need assistance / figure things out
+- N/A
+
+2024/04/09 Mark
+1. What I have done / not done since last Scrum?
+- Update Listing Details page
+2. What I plan to do from this scrum to next? (next 24 hours)
+- Retrieve listing information from database and display on homepage
+- Continue working on the front-end design
+3. Where do I need assistance? What do I need to figure out?
+- N/A
+
+2024/04/09 Michael
+1. Done since last scrum
+- Research on backend, re-hosting
+2. Plan until next Scrum
+- Set up S3 bucket to store our images
+3. Need assistance / figure things out 
+- May have issues in the beginning getting and implementing image file paths
+
+2024/04/09 SangKyu
+1. What I have done / not done since last Scrum?
+- Setup and tested Sonarqube in the pipeline
+2. What I plan to do from this scrum to next? (next 24 hours)
+- Integrate Github, Jenkins, Sonarqube
+- Search for information on Docker Container
+3. Where do I need assistance? What do I need to figure out?
+- Need to figure out how to integrate SonarQube and Docker into the CI/CD process.
+
+2024/04/09 Xing
+1. Done since last scrum
+- wrote user info into our Mongodb 
+2. Plan until next Scrum
+- retrieve user info and update info
+3. Need assistance / figure things out
+- N/A
+----------------------------------------------------------------------------------------------
+2024/04/10 Bo Kyung Kim
+1. Done since last scrum
+- Implemented backend for the create listing page
+2. Plan until next Scrum
+-  Saving "host" data from the create listing page
+- Start booking part 
+3. Need assistance / figure things out 
+- N/A
+
+2024/04/10 Mark
+1. Done since last scrum
+- Updating Listing Details
+2. Plan until next Scrum
+- Update Listing Details
+3. Need assistance / figure things out
+- N/A
+
+2024/04/10 Michael
+1. Done since last scrum
+- Set up S3 Bucket, Have coded some changes but not implemented it yet
+2. Plan until next Scrum
+- Alter our code to store the images in s3, take on a new task in the backlog
+3. Need assistance / figure things out 
+- uploading multiple images at once to s3 and displaying them in the frontend will be a tricky task
+
+2024/04/10 SangKyu
+1. Done since last scrum
+- Setup and tested Sonarqube in the pipeline
+- Created EC2 instance and Installed Docker.
+2. Plan until next Scrum
+- Setup Docker for CI/CD process
+- Search for information on Docker Container
+3. Need assistance / figure things out 
+- Need to figure out how to integrate SonarQube and Docker into the CI/CD process.
+
+2024/04/10 Xing
+1. Done since last scrum
+- done part of work on  retrieving user info and updating info
+2. Plan until next Scrum
+- finish user info part
+3. Need assistance / figure things out
+- N/A
+----------------------------------------------------------------------------------------------
+2024/04/11 Bo Kyung
+1. Done since last scrum
+- Tried to save user _id to host column in listing schema
+- Started working on delete/update listings
+2. Plan until next Scrum
+-  Keep working on delete/update listings
+3. Need assistance / figure things out 
+- Failed to save user _id, need to understand more about auth0
+
+2024/04/11 Mark
+1. Done since last scrum
+- Retrieve information from listings and implement on listing details
+2. Plan until next Scrum
+-  Update Listing Details
+3. Need assistance / figure things out 
+- N/A
+
+2024/04/11 Michael
+1. Done since last scrum
+- Photos in create listing are stored in s3 and can be accessed and displayed on home page
+2. Plan until next Scrum
+- Have host populated in database, help with displaying listings by Id
+3. Need assistance / figure things out 
+- figure out why host will not populate in the database
+
+2024/04/11 SangKyu
+1. Done since last scrum
+- Setup Docker server
+- Tested building container image
+2. Plan until next Scrum
+- Setup Docker for CI/CD process
+- Debugging Docker image building issue
+- Search for information on Docker Container
+3. Need assistance / figure things out
+- Need assistance in resolving heap out of memory issue encountered during Docker image building.
+- Need to figure out the integration of SonarQube and Docker into the CI/CD process.
+----------------------------------------------------------------------------------------------
+2024/04/10 Xing
+1. Done since last scrum
+- finished  retrieving user info and updating use info
+2. Plan until next Scrum
+- implementing map
+3. Need assistance / figure things out
+- N/A
+----------------------------------------------------------------------------------------------
+2024/04/15 Bo Kyung
+1.Done since last scrum
+- Tried to fix CRUD operation for listing
+2. Plan until next Scrum
+- Finish editing listing
+- Add some validation for the update/delete listing
+3. Need assistance / figure things out 
+- Failed to update images in update listing page
+
+2024/04/15 Mark
+1.Done since last scrum
+- Created image gallery in Listing Details
+- Created Host and Send Host Message Interface
+- Create Static Interface for Booking History
+- Implement Search Functions (Need to resolve issue)
+2. Plan until next Scrum
+- Integrate Booking calendar functions to booking widget
+- Add simple features for conistent Design
+3. Need assistance / figure things out 
+- n/a
+
+2024/04/15 Michael
+1. Done since last scrum
+- Redo test deployment
+2. Plan until next Scrum
+- Create bookings and payment fulfilled using Stripe
+3. Need assistance / figure things out 
+- Obtaining Payment Id from Stripe
+
+2024/04/15 SangKyu
+1. Done since last scrum
+- Debugging Docker image building issue
+- Tested building container image
+2. Plan until next Scrum
+- Search for information on Docker Container (Traefik, Domain)
+- Setup Docker for CI/CD process 
+3. Need assistance / figure things out
+- Need to figure out how to utilize Traefik
+
+2024/04/15 Xing
+1. Done since last scrum
+- implemented map for listing detail page
+2. Plan until next Scrum
+- try reimplementing map using google map
+- search functionality
+3. Need assistance / figure things out
+- research google map API
+----------------------------------------------------------------------------------------------
+2024/04/17 Bo Kyung
+1. Done since last scrum
+- Still working for the UserListing page.
+2. Plan until next Scrum
+- Finish UserListing page.
+- Add confirmation/Success message for deleting listing
+3. Need assistance / figure things out 
+
+2024/04/16 Michael
+1. Done since last scrum
+- Stripe payment and makeBooking
+2. Plan until next Scrum
+- continue working on the booking aspects including refunds
+3. Need assistance / figure things out 
+- refunds
+
+2024/04/16 SangKyu
+1. What I have done / not done since last Scrum?
+- Searched for information on Docker Container (Traefik, Domain)
+- Setup the Traefik container in the Docker server 
+2. What I plan to do from this scrum to next? (next 24 hours)
+- Plan to setup the Traefik to work with TLS
+3. Where do I need assistance? What do I need to figure out?
+- Need to figure out how to utilize Traefik
+----------------------------------------------------------------------------------------------
+2024/04/17 Bo Kyung
+1. Done since last scrum
+- Updated UserListing page to fetch only the current user's listing
+2. Plan until next Scrum
+- Implementing Admin page
+- CRUD operation for managing user account
+3. Need assistance / figure things out 
+
+2024/04/17 Mark
+1. Done since last scrum
+- User Able to send message
+- Implement Calendar for check in and check out for booking
+2. Plan until next Scrum
+- Create a conversation/message enabling to communicate to other users
+3. Need assistance / figure things out 
+- reasearch about socket.io
+
+2024/04/17 Michael
+1. Done since last scrum
+- Booking with webhook from stripe, payment can be made
+2. Plan until next Scrum
+- make My Bookings Dynamic and and allow user to cancel booking and obtain a refund
+3. Need assistance / figure things out 
+- refunds with Stripe
+
+2024/04/17 SangKyu
+1. What I have done / not done since last Scrum?
+- Searched for information on Docker Container (Traefik)
+- Setup the Traefik container in the Docker server 
+- Build Test
+2. What I plan to do from this scrum to next? (next 24 hours)
+- Plan to setup the Traefik to work with TLS
+3. Where do I need assistance? What do I need to figure out?
+- Need to figure out how to utilize Traefik
+
+2024/04/17 Xing
+1. Done since last scrum
+- implemented search functionality UI And part functionality (location,guest)
+2. Plan until next Scrum
+- Implementing rest part of search functionality (type,category, amenities,bedroom, bathroom, bed,price, rate)
+3. Need assistance / figure things out
+----------------------------------------------------------------------------------------------
+2024/04/18 Bo Kyung
+1. Done since last scrum
+- Worked on the Admin Page
+2. Plan until next Scrum
+- Finish Admin Page
+- Add some styles and validation
+3. Need assistance / figure things out 
+
+2024/04/18 Mark
+1. Done since last scrum
+- Research on socket.io
+2. Plan until next Scrum
+- Implement message/conversation between guest and host
+3. Need assistance / figure things out
+- research socket.io
+
+2024/04/18 SangKyu
+1. What I have done / not done since last Scrum?
+- Searched for information on Docker Container (Traefik)
+- Setup the Traefik container in the Docker server 
+2. What I plan to do from this scrum to next? (next 24 hours)
+- Setup the Traefik to work with TLS
+3. Where do I need assistance? What do I need to figure out?
+- Need to figure out how to resolve Auth0 issue with Traefik
+
+2024/04/18 Xing
+1. Done since last scrum
+- implemented search functionality 
+2. Plan until next Scrum
+- Implementing google map
+3. Need assistance / figure things out
+- research google map
