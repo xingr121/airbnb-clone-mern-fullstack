@@ -7,25 +7,32 @@ import "../styles/ListingDetails.scss";
 import BookingWidget from "../components/booking/BookingWidget2";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useGetMyUser } from "../api/UserApi";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:4000";
 
 function HostMessage() {
   const { id } = useParams();
 
-  const { currentUser } = useGetMyUser();
-
   const [listing, setListing] = useState(null);
   const [message, setMessage] = useState("");
-
+  const [isSending, setIsSending] = useState(false);
   const { getAccessTokenSilently } = useAuth0();
+  const [chatId, setChatId] = useState(null);
 
   useEffect(() => {
     const fetchListing = async () => {
+      const accessToken = await getAccessTokenSilently();
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/listing/${id}`
-        );
+        const response = await axios.get(`${BASE_URL}/listing/${id}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        });
         setListing(response.data);
+
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching listing:", error);
@@ -33,32 +40,31 @@ function HostMessage() {
     };
 
     fetchListing();
-  }, [id]);
+  }, [id, getAccessTokenSilently]);
 
-  const sendMessage = async () => {
-    const accessToken = await getAccessTokenSilently();
+  const addMessage = async () => {
+    setIsSending(true);
+
     try {
-      await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/message`,
-        {
-          sender: currentUser._id,
-          receiver: listing.host._id,
-          messageContent: message,
-          listing: listing._id,
-          timestamp: new Date(),
-          messageStatus: "Unread",
-        },
+      const accessToken = await getAccessTokenSilently();
+      const response = await axios.post(
+        `${BASE_URL}/message/${chatId}`,
+        { text: message },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
           },
         }
       );
-      alert("Message sent successfully");
       setMessage("");
+
+      toast.success("Message sent!");
     } catch (error) {
       console.error("Error sending message:", error);
-      alert("Failed to send message");
+      toast.error("Failed to send message.");
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -76,11 +82,9 @@ function HostMessage() {
             {listing && listing.host && (
               <>
                 <h4 className="">{listing.host.username}</h4>
-                {/* <h4> Contact Mark</h4> */}
                 <img
                   className="rounded-circle m-4 text-center"
                   src={listing.host.imageUrl || avatar}
-                  // src={avatar}
                   alt="profile"
                   width="100"
                   height="100"
@@ -120,9 +124,10 @@ function HostMessage() {
             />
             <Button
               className="btn btn-light border-dark mt-3 py-3 px-4"
-              onClick={sendMessage}
+              disabled={isSending}
+              onClick={addMessage}
             >
-              Send message
+              {isSending ? "Sending..." : "Send message"}
             </Button>
           </div>
         </div>

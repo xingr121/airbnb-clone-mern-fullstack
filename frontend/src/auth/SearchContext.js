@@ -10,7 +10,7 @@ export const SearchContextProvider = ({ children }) => {
     () => new Date(new Date().toISOString())
   );
   const [guestCount, setGuestCount] = useState(() => parseInt("1"));
-
+  // const [guestCount, setGuestCount] = useState();
   const saveSearchValues = (destination, checkIn, checkOut, guestCount) => {
     setDestination(destination);
     setCheckIn(checkIn);

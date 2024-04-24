@@ -1,18 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 import "../styles/CreateListing.scss";
 import { categories, types, facilities } from "../assets/data/data";
-
 import { RemoveCircleOutline, AddCircleOutline } from "@mui/icons-material";
 import variables from "../styles/variables.scss";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { IoIosImages } from "react-icons/io";
-import { useState } from "react";
 import { BiTrash } from "react-icons/bi";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 import ProfileNav from "../shared/ProfileNav";
 import { useAuth0 } from "@auth0/auth0-react";
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const CreateListing = () => {
   const [category, setCategory] = useState("");
@@ -54,22 +52,12 @@ const CreateListing = () => {
     }
   };
 
-  /* UPLOAD, DRAG & DROP, REMOVE PHOTOS */
+  /* UPLOAD, REMOVE PHOTOS */
   const [photos, setPhotos] = useState([]);
 
   const handleUploadPhotos = (e) => {
     const newPhotos = e.target.files;
     setPhotos((prevPhotos) => [...prevPhotos, ...newPhotos]);
-  };
-
-  const handleDragPhoto = (result) => {
-    if (!result.destination) return;
-
-    const items = Array.from(photos);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    setPhotos(items);
   };
 
   const handleRemovePhoto = (indexToRemove) => {
@@ -99,6 +87,37 @@ const CreateListing = () => {
   const handlePost = async (e) => {
     e.preventDefault();
 
+    // Validation
+    if (!category) {
+      toast.error("Please select the category");
+      return;
+    }
+    if (!type) {
+      toast.error("Please select the type of place");
+      return;
+    }
+    if (
+      !formLocation.street ||
+      !formLocation.city ||
+      !formLocation.province ||
+      !formLocation.country
+    ) {
+      toast.error("Please provide the complete location information");
+      return;
+    }
+    if (photos.length < 1) {
+      toast.error("Please upload at least one photo");
+      return;
+    }
+    if (
+      !formDescription.title ||
+      !formDescription.description ||
+      !formDescription.pricePerNight
+    ) {
+      toast.error("Please fill in all description fields");
+      return;
+    }
+
     try {
       /* Create a new FormData object to handle file uploads */
       const listingForm = new FormData();
@@ -123,28 +142,32 @@ const CreateListing = () => {
         listingForm.append("listingPhotos", photo);
       });
 
-        /* Send a POST request to server */
-        const accessToken = await getAccessTokenSilently();
-        const response = await fetch("http://localhost:4000/listing/create", {
-          method: "POST",
-          body: listingForm,
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+      /* Send a POST request to server */
+      const accessToken = await getAccessTokenSilently();
+      const response = await fetch(`${API_BASE_URL}/listing/create`, {
+        method: "POST",
+        body: listingForm,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       if (response.ok) {
         const responseData = await response.json();
         if (responseData && responseData.listingPhotoPaths) {
+          toast.success("Listing created successfully");
           navigate("/");
         } else {
           console.error("Failed to upload listing photos.");
+          toast.error("Failed to upload listing photos");
         }
       } else {
         console.error("Failed to create listing:", response.statusText);
+        toast.error("Failed to create listing");
       }
     } catch (err) {
       console.error("Publish Listing Failed", err.message);
+      toast.error("Failed to publish listing");
     }
   };
 
@@ -214,7 +237,6 @@ const CreateListing = () => {
                   name="aptSuite"
                   value={formLocation.aptSuite}
                   onChange={handleChangeLocation}
-                  required
                 />
               </div>
               <div className="location">
@@ -388,84 +410,56 @@ const CreateListing = () => {
             </div>
 
             <h3>Add some photos of your place</h3>
-            <DragDropContext onDragEnd={handleDragPhoto}>
-              <Droppable droppableId="photos" direction="horizontal">
-                {(provided) => (
-                  <div
-                    className="photos"
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    {photos.length < 1 && (
-                      <>
-                        <input
-                          id="image"
-                          type="file"
-                          style={{ display: "none" }}
-                          accept="image/*"
-                          onChange={handleUploadPhotos}
-                          multiple
-                        />
-                        <label htmlFor="image" className="alone">
-                          <div className="icon">
-                            <IoIosImages />
-                          </div>
-                          <p>Upload from your device</p>
-                        </label>
-                      </>
-                    )}
+            <div className="photos">
+              {photos.length < 1 && (
+                <>
+                  <input
+                    id="image"
+                    type="file"
+                    style={{ display: "none" }}
+                    accept="image/*"
+                    onChange={handleUploadPhotos}
+                    multiple
+                  />
+                  <label htmlFor="image" className="alone">
+                    <div className="icon">
+                      <IoIosImages />
+                    </div>
+                    <p>Upload from your device</p>
+                  </label>
+                </>
+              )}
 
-                    {photos.length >= 1 && (
-                      <>
-                        {photos.map((photo, index) => {
-                          return (
-                            <Draggable
-                              key={index}
-                              draggableId={index.toString()}
-                              index={index}
-                            >
-                              {(provided) => (
-                                <div
-                                  className="photo"
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                >
-                                  <img
-                                    src={URL.createObjectURL(photo)}
-                                    alt="place"
-                                  />
-                                  <button
-                                    type="button"
-                                    onClick={() => handleRemovePhoto(index)}
-                                  >
-                                    <BiTrash />
-                                  </button>
-                                </div>
-                              )}
-                            </Draggable>
-                          );
-                        })}
-                        <input
-                          id="image"
-                          type="file"
-                          style={{ display: "none" }}
-                          accept="image/*"
-                          onChange={handleUploadPhotos}
-                          multiple
-                        />
-                        <label htmlFor="image" className="together">
-                          <div className="icon">
-                            <IoIosImages />
-                          </div>
-                          <p>Upload from your device</p>
-                        </label>
-                      </>
-                    )}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
+              {photos.length >= 1 && (
+                <>
+                  {photos.map((photo, index) => (
+                    <div className="photo" key={index}>
+                      <img src={URL.createObjectURL(photo)} alt="place" />
+                      <button
+                        type="button"
+                        onClick={() => handleRemovePhoto(index)}
+                      >
+                        <BiTrash />
+                      </button>
+                    </div>
+                  ))}
+                  <input
+                    id="image"
+                    type="file"
+                    style={{ display: "none" }}
+                    accept="image/*"
+                    onChange={handleUploadPhotos}
+                    multiple
+                  />
+                  <label htmlFor="image" className="together">
+                    <div className="icon">
+                      <IoIosImages />
+                    </div>
+                    <p>Upload from your device</p>
+                  </label>
+                </>
+              )}
+            </div>
 
             <h3>What make your place attractive and exciting?</h3>
             <div className="description">
@@ -499,11 +493,11 @@ const CreateListing = () => {
                 required
               />
             </div>
-          </div>
 
-          <button className="submit_btn" type="submit">
-            CREATE YOUR LISTING
-          </button>
+            <button className="submit_btn" type="submit">
+              CREATE YOUR LISTING
+            </button>
+          </div>
         </form>
       </div>
     </>

@@ -101,18 +101,20 @@ function UserMenu() {
         >
           <div className="d-flex flex-column" style={{ cursor: "pointer" }}>
             <MenuItem label="Profile" to="/account" />
-            <MenuItem label="Trips" to="/account/bookings" />
-            <MenuItem label="Accomodations" to="/account/listings" />
+            <MenuItem label="Bookings" to="/account/bookings" />
             {/* ToDo: Create router for account messages */}
             <MenuItem label="Messages" to="/account/messages" />
+            <MenuItem label="Reviews" to="/account/review" />
+            <MenuItem label="Become a Host" to="/account/listing/new" />
+            <MenuItem label="Accomodations" to="/account/listings" />
             {/* Render only if admin */}
             {isAdmin && <MenuItem label="Admin" to="/admin" />}
             <hr />
             <MenuItem
               label="Logout"
-              onClick={() => {
-                logout();
-              }}
+              onClick={() =>
+                logout({ logoutParams: { returnTo: window.location.origin } })
+              }
             />
           </div>
         </div>

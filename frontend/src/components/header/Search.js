@@ -45,12 +45,13 @@ function Search() {
       <input
         type="text"
         placeholder="Anywhere"
-        value={destination}
+        value={destination || ""}
         onChange={(e) => setDestination(e.target.value)}
         className="border-0 w-75"
       />
-      <div className="border border-gray-300"></div>
+      <div className="flex border border-gray-300"></div>
       <div>
+        <span>checkin</span>
         <DatePicker
           placeholderText="Check-in Date"
           className="min-w-full bg-white p-2 border-0"
@@ -65,6 +66,7 @@ function Search() {
         />
       </div>
       <div>
+        <span>checkout</span>
         <DatePicker
           placeholderText="Check-out Date"
           className="min-w-full bg-white p-2 border-0"
@@ -82,14 +84,19 @@ function Search() {
         className="border
        border-gray-300"
       ></div>
-      <input
-        type="number"
-        min={1}
-        placeholder="Add Guests"
-        value={guestCount}
-        onChange={(e) => setGuestCount(parseInt(e.target.value))}
-        className="border-0"
-      />
+      <div>
+        {" "}
+        <span>Add Guests</span>
+        <input
+          type="number"
+          min={1}
+          placeholder="Add Guests"
+          value={guestCount || ""}
+          onChange={(e) => setGuestCount(parseInt(e.target.value))}
+          className="border-0 text-center"
+        />
+      </div>
+
       <button
         className="rounded-pill text-white"
         type="submit"

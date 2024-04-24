@@ -197,8 +197,8 @@ function Admin() {
         </div>
 
         {/* Modal */}
-        <div id="myModal" className="modal">
-          <div className="modal-content">
+        <div id="myModal" className="modal1">
+          <div className="modal1-content">
             <span
               className="close"
               onClick={() =>
@@ -207,12 +207,12 @@ function Admin() {
             >
               &times;
             </span>
-            <form className="modal-form">
+            <form className="modal1-form">
               <h1>Edit User</h1>
               <div className="box">
                 <label htmlFor="username">Username:</label>
                 <input
-                  className="modal-input"
+                  className="modal1-input"
                   type="text"
                   id="username"
                   value={editUser?.username || ""}
@@ -224,7 +224,7 @@ function Admin() {
               <div className="box">
                 <label htmlFor="email">Email:</label>
                 <input
-                  className="modal-input"
+                  className="modal1-input"
                   type="text"
                   id="email"
                   value={editUser?.email || ""}
@@ -236,7 +236,7 @@ function Admin() {
               <div className="box">
                 <label htmlFor="phone">Phone:</label>
                 <input
-                  className="modal-input"
+                  className="modal1-input"
                   type="text"
                   id="phone"
                   value={editUser?.phone || ""}
@@ -248,7 +248,7 @@ function Admin() {
               <div className="box">
                 <label htmlFor="role">Role:</label>
                 <select
-                  className="modal-input"
+                  className="modal1-input"
                   id="role"
                   value={editUser?.role || ""}
                   onChange={(e) =>
@@ -259,16 +259,16 @@ function Admin() {
                   <option value="Admin">Admin</option>
                 </select>
               </div>
-              <div className="modalBtn_container">
+              <div className="modal1Btn_container">
                 <button
-                  className="modal_btn"
+                  className="modal1_btn"
                   type="button"
                   onClick={handleSaveClick}
                 >
                   Save
                 </button>
                 <button
-                  className="modal_btn"
+                  className="modal1_btn"
                   type="button"
                   onClick={handleCancelClick}
                 >

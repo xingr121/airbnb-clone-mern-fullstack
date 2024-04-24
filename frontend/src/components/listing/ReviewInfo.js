@@ -1,63 +1,82 @@
-// import React from "react";
+import React, { useState, useEffect } from "react";
+import avatar from "../../assets/images/avatar.jpg";
 
-// function ReviewInfo() {
-//     // Extract reviews for the selected listing
-//     const reviews = listing?.reviews || [];
+function ReviewInfo({ listing }) {
+  const [reviews, setReviews] = useState([]);
 
-//     // Calculate average rating
-//     const { totalRating, avgRating } = calculateAvgRating(reviews);
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_BASE_URL}/review/listing/${listing._id}`
+          // `http://localhost:4000/review/listing/${listing._id}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch reviews");
+        }
+        const data = await response.json();
+        setReviews(data);
+      } catch (error) {
+        console.error(error);
+        // Handle error appropriately, e.g., show error message to user
+      }
+    };
 
-//     }
-//   return (
-//     <>
-//       {/* Rating */}
-//       <div className="border-bottom pb-3">
-//         <h4 className="mt-3 d-flex align-items-center gap-1">
-//           <i className="bi bi-star-fill"></i>
-//           {avgRating === 0 ? null : avgRating}
-//           {totalRating === 0 ? (
-//             "Not yet rated"
-//           ) : (
-//             <span>| {reviews.length} reviews</span>
-//           )}
-//         </h4>
-//         {/* Reviews */}
-//         {/* ToDo; Retrieve Review Information by Guest*/}
-//         <div className="mt-3">
-//           {reviews.map((review) => (
-//             <div
-//               key={review.reviewId}
-//               className="listing-review d-flex flex-row"
-//             >
-//               {/* Retrieve Users Information */}
-//               <div>
-//                 <img
-//                   className="rounded-circle"
-//                   src={avatar}
-//                   alt="profile"
-//                   width="50"
-//                   height="50"
-//                 />
-//               </div>
-//               {/* Retrieve Users information by userID --> name city country */}
-//               <div className="d-flex flex-column">
-//                 <h6>User Name</h6>
-//                 <p>New York, New York</p>
+    fetchReviews();
+  }, [listing]);
 
-//                 {/* Reviews with stars and date */}
-//                 <div className="d-flex align-items-center">
-//                   <span className="me-2">{review.rating} stars</span>
-//                   <span>{review.reviewText}</span>
-//                   <span className="me-2">{review.reviewDate}</span>
-//                 </div>
-//                 {/* Review Text */}
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
+  const renderStars = (rating) => {
+    const star = "★";
+    return star.repeat(rating);
+  };
 
-// export default ReviewInfo;
+  return (
+    <>
+      {/* Reviews */}
+      <h4 className="my-3">Guest Reviews</h4>
+      <div className="mt-4 d-flex flex-wrap justify-content-between border-bottom pb-3">
+        {reviews.map((review, index) => (
+          <div
+            key={review._id}
+            className={`listing-review d-flex flex-row mb-3 ${
+              index % 2 === 0 ? "mr-3" : "ml-3"
+            }`}
+            style={{ width: "calc(50% - 15px)" }}
+          >
+            {/* Retrieve Users Information */}
+            <div>
+              <img
+                className="rounded-circle"
+                src={review.user.imageUrl || avatar}
+                alt="profile"
+                width="50"
+                height="50"
+              />
+            </div>
+            {/* Retrieve Users information by userID --> name city country */}
+            <div className="d-flex flex-column ms-4">
+              <h6>{review.user.username}</h6>
+              <h6>
+                {review.user.city}, {review.user.country}{" "}
+              </h6>
+              {/* Reviews with stars and date */}
+              <div className="d-flex align-items-center">
+                <span className="me-2">{renderStars(review.rating)}</span>
+                <span className="me-2">
+                  {new Date(review.createdAt).toLocaleDateString("en-US", {
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </span>
+              </div>
+              {/* Review Text */}
+              <span>{review.reviewText}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+export default ReviewInfo;

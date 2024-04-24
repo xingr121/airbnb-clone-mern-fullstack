@@ -458,3 +458,119 @@ Daily Scrum Meeting
 - Implementing google map
 3. Need assistance / figure things out
 - research google map
+----------------------------------------------------------------------------------------------
+2024/04/19 Bo Kyung
+1. Done since last scrum
+- Finished implementing Admin page
+2. Plan until next Scrum
+- Implement Review page 
+3. Need assistance / figure things out 
+
+2024/04/19 Michael
+1. Done since last scrum
+- Users can cancel bookings, and obtain refunds
+2. Plan until next Scrum
+- Finish everything related to bookings but most importantly the calendar needs to update
+3. Need assistance / figure things out 
+- Stuff related to the calendars
+
+2024/04/19 SangKyu
+1. What I have done / not done since last Scrum?
+- Searched for information on Docker Container (Traefik)
+- Setup the Traefik to work with TLS
+2. What I plan to do from this scrum to next? (next 24 hours)
+- Set up the Traefik to work with TLS.
+- Debug the Traefik issue (unable to verify the result of the Docker image build in the browser)
+3. Where do I need assistance? What do I need to figure out?
+- Need to figure out how to resolve Auth0 issue with Traefik
+
+2024/04/19 Xing
+1. Done since last scrum
+- research and  intergrated googlemap to app, display marker based on listing address
+2. Plan until next Scrum
+- finish map for detail, searchpage, homepage  
+-complete search based on checkin and checkout 
+3. Need assistance / figure things out 
+----------------------------------------------------------------------------------------------
+2024/04/22 Bo Kyung
+1. Done since last scrum
+- Implemented Review Page
+2. Plan until next Scrum
+- Add Edit / Delete function on the Review Page
+- Fetch Review on the Detail Listing Page
+- Add some validation on the Review / Creating Listing page
+3. Need assistance / figure things out 
+
+2024/04/22 Mark
+1. Done since last scrum
+- Backend functional for Chat and message. tested in postman
+2. Plan until next Scrum
+- working on front-end for integrating chat.
+3. Need assistance / figure things out 
+- Fetching chatId and how to implement socket.io
+
+2024/04/22 Michael
+1. Done since last scrum
+- Calendar updates. Bookings for a listing are no longer available for the calendar
+2. Plan until next Scrum
+- "Expired" enum has issues. Needs to be Fixed. Help out on other issues
+3. Need assistance / figure things out 
+- Enum
+
+2024/04/22 SangKyu
+1. What I have done / not done since last Scrum?
+- Searched for information on Docker Container (Traefik)
+- Setup the Traefik to work with TLS
+- Debug the Traefik issue (unable to verify the result of the Docker image build in the browser)
+2. What I plan to do from this scrum to next? (next 24 hours)
+- Build test
+- Debug issues - CORS and Logout
+- Arrange Dockerfile and Jenkinsfile
+3. Where do I need assistance? What do I need to figure out?
+- Need to figure out how to resolve Auth0 issue with Traefik
+
+2024/04/22 Xing
+1. Done since last scrum
+- implement map on detail page, searchpage, homepage
+2. Plan until next Scrum
+- improve some part of search, map and UI
+- test search based on checkin and checkout, amenities search query
+3. Need assistance / figure things out 
+----------------------------------------------------------------------------------------------
+2024/04/23 Bo Kyung
+1. Done since last scrum
+- Fetch reviews on the listing details page
+- Add validation on the review function
+- Implemented Edit / Delete Review function
+2. Plan until next Scrum
+- Add validation on the Creating Listing page
+- Update some styles on the User Listing page
+- Work on the rating & average Rating part
+3. Need assistance / figure things out 
+
+2024/04/23 Mark
+1. Done since last scrum
+- Watched Tutorials on socket.io
+2. Plan until next Scrum
+- Work on the messaging section
+3. Need assistance / figure things out 
+- socket.io
+
+2024/04/23 Michael
+1. Done since last scrum
+- Watched some tutorials on messaging
+2. Plan until next Scrum
+- Work on the messaging portion of the application/start re-testing hosting
+3. Need assistance / figure things out 
+- Messaging
+
+2024/04/23 SangKyu
+1. What I have done / not done since last Scrum?
+- Searched for information on Docker Container (Traefik)
+- Debugging the Traefik issue (CORS and Logout)
+2. What I plan to do from this scrum to next? (next 24 hours)
+- Build test
+- Debugging issues - CORS and Logout
+- Arrange Dockerfile and Jenkinsfile
+3. Where do I need assistance? What do I need to figure out?
+----------------------------------------------------------------------------------------------

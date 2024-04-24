@@ -123,10 +123,13 @@ const CreateListing = () => {
       });
 
       /* Send a POST request to server */
-      const response = await fetch("http://localhost:4000/listing/create", {
-        method: "POST",
-        body: listingForm,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/listing/create`,
+        {
+          method: "POST",
+          body: listingForm,
+        }
+      );
 
       if (response.ok) {
         const responseData = await response.json();

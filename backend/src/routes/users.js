@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const UsersController = require("../controllers/UsersController");
 const { jwtCheck, jwtParse } = require("../middleware/auth");
-const { validateMyUserRequest } = require("../middleware/validation");
 
 require("dotenv").config();
 

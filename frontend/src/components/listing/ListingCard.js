@@ -14,7 +14,7 @@ function ListingCard({ listing }) {
     province,
     country,
     isFavorite,
-    // reviews,
+    averageRate,
   } = listing;
 
   const price = parseFloat(pricePerNight["$numberDecimal"]);
@@ -54,8 +54,7 @@ function ListingCard({ listing }) {
             {/* Ratings */}
             <span className="listing_rating d-flex align-items-center gap-1">
               <i className="bi bi-star-fill"></i>
-              {/* {avgRating === "" ? "Not yet rated" : avgRating} ({reviews.length}
-              ) */}
+              {averageRate.toFixed(1)}
             </span>
           </div>
           {/* Title */}

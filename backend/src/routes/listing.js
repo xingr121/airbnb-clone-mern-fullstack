@@ -21,7 +21,7 @@ router.get("/", listingController.getListingsByCategory);
 /* GET Listing by search*/
 router.get("/search", listingController.getListingBySearch);
 
-/* GET LISTINGS BY Id */
+/* GET LISTING BY Id */
 router.get("/:id", listingController.getListingsById);
 
 /* DELETE LISTING BY ID */

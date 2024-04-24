@@ -106,81 +106,74 @@ function UserListing() {
 
   return (
     <>
-      <div className="profile">
-        <ProfileNav />
-
-        <div className="text-center">
-          <Link
-            className="bg-danger text-white py-3 px-5 rounded-pill text-decoration-none"
-            to={"/account/listing/new"}
-          >
-            <AiOutlinePlus />
-            Host Place
-          </Link>
+      <div className="container mt-5">
+        <h1 className="adminHeading">Manage My Accomodations</h1>
+        <div className="adminPanel">
+          <div className="adminContainer">
+            <div className="adminTable">
+              <table className="adminTable">
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Title</th>
+                    <th>City</th>
+                    <th>Province</th>
+                    <th>Country</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {listings.map((listing) => (
+                    <tr key={listing._id}>
+                      <td>
+                        <Link
+                          to={`/listings/${listing._id}`}
+                          style={{ cursor: "pointer" }}
+                          className="text-decoration-none"
+                        >
+                          <img
+                            src={listing.signedUrls[0]}
+                            alt={listing.title}
+                            style={{
+                              width: "100px",
+                              height: "100px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        </Link>
+                      </td>
+                      <td>{listing.title}</td>
+                      <td>{listing.city}</td>
+                      <td>{listing.province}</td>
+                      <td>{listing.country}</td>
+                      <td>
+                        $
+                        {parseFloat(
+                          listing.pricePerNight["$numberDecimal"]
+                        ).toFixed(2)}
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-sm btn-primary"
+                          onClick={() => handleUpdateListing(listing._id)}
+                        >
+                          Update
+                        </button>
+                        <button
+                          className="btn btn-sm btn-danger ms-2"
+                          onClick={() => handleDeleteListing(listing._id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div className="mt-5">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Photo</th>
-              <th>Title</th>
-              <th>City</th>
-              <th>Province</th>
-              <th>Country</th>
-              <th>Price</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {listings.map((listing) => (
-              <tr key={listing._id}>
-                <td>
-                  <Link
-                    to={`/listings/${listing._id}`}
-                    style={{ cursor: "pointer" }}
-                    className="text-decoration-none"
-                  >
-                    <img
-                      src={listing.signedUrls[0]}
-                      alt={listing.title}
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "cover",
-                      }}
-                    />
-                  </Link>
-                </td>
-                <td>{listing.title}</td>
-                <td>{listing.city}</td>
-                <td>{listing.province}</td>
-                <td>{listing.country}</td>
-                <td>
-                  $
-                  {parseFloat(listing.pricePerNight["$numberDecimal"]).toFixed(
-                    2
-                  )}
-                </td>
-                <td>
-                  <button
-                    className="btn btn-sm btn-primary"
-                    onClick={() => handleUpdateListing(listing._id)}
-                  >
-                    Update
-                  </button>
-                  <button
-                    className="btn btn-sm btn-danger ms-2"
-                    onClick={() => handleDeleteListing(listing._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </>
   );

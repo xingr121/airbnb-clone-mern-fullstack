@@ -6,7 +6,16 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
-app.use(cors());
+// CORS setting
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// app.use(cors());
 
 /***** Routes *****/
 // MyUser Route
@@ -33,6 +42,10 @@ app.use("/message", express.json(), messageRoute);
 const chatRoute = require("./routes/chatRoute.js");
 app.use("/chat", express.json(), chatRoute);
 
+// Review route
+const reviewRoute = require("./routes/review.js");
+app.use("/review", express.json(), reviewRoute);
+
 /***** End Of Routes *****/
 
 // Socket.IO connection handling
@@ -57,8 +70,11 @@ io.on("connection", (socket) => {
 
 // Port for server
 const port = process.env.PORT || 4000;
+// Dynamic API URL based on environment variable or default to localhost
+const apiUrl = process.env.API_URL || `http://localhost:${port}`;
 app.listen(port, () => {
   console.log(`Server started on Port ${port}`);
+  console.log(`API URL: ${apiUrl}`);
 });
 
 // Database Connection

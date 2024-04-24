@@ -19,6 +19,7 @@ import SearchPage from "../pages/SearchPage";
 import PaymentDetails from "../pages/PaymentDetails";
 import PaymentCancel from "../pages/PaymentCancel";
 import Admin from "../pages/Admin";
+import Review from "../pages/Review";
 
 function Routers() {
   return (
@@ -142,6 +143,14 @@ function Routers() {
         element={
           <Layout>
             <Admin />
+          </Layout>
+        }
+      />
+      <Route
+        path="/account/review"
+        element={
+          <Layout>
+            <Review />
           </Layout>
         }
       />

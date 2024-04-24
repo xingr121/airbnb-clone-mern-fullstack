@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { MarkerF, InfoWindow } from "@react-google-maps/api";
+import { MarkerF, InfoWindow, Marker } from "@react-google-maps/api";
 import { setKey, fromAddress } from "react-geocode";
 import { Link } from "react-router-dom";
+const { useNavigate } = require("react-router-dom");
 function Pin({ listing }) {
+  const navigate = useNavigate();
   const key = process.env.REACT_APP_GOOGLE_MAP_KEY;
   const [isOpen, setIsOpen] = useState(false);
   const [lat, setLat] = useState();
@@ -17,7 +19,6 @@ function Pin({ listing }) {
       try {
         const { results } = await fromAddress(address);
         const { lat, lng } = results[0].geometry.location;
-        console.log({ lat, lng });
         setLat(lat);
         setLng(lng);
       } catch (error) {
@@ -33,6 +34,7 @@ function Pin({ listing }) {
           lat: 45.501689,
           lng: -73.567256,
         };
+
   return (
     <MarkerF position={position} onClick={handleMarkerClick}>
       {isOpen && (
@@ -48,7 +50,7 @@ function Pin({ listing }) {
               alt=""
             />
             <div className="text-container">
-              <Link to="#">
+              <Link to={`/listings/${listing._id}`}>
                 {listing.pricePerNight["$numberDecimal"]} PerNight
               </Link>
               <b>Verified Listing</b>

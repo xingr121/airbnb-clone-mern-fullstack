@@ -97,7 +97,7 @@ function BookingWidget({ listing }) {
         </button>
       </div>
 
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Guest Limit Exceeded</Modal.Title>
         </Modal.Header>
@@ -106,7 +106,7 @@ function BookingWidget({ listing }) {
         </Modal.Body>
       </Modal>
 
-      <Modal show={showDateModal} onHide={() => setShowDateModal(false)}>
+      <Modal show={showDateModal} onHide={() => setShowDateModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Date Selection Needed</Modal.Title>
         </Modal.Header>

@@ -68,7 +68,7 @@
 }
 
 /* ******** Modal ********** */
-.modal {
+.modal1 {
   display: none;
   position: fixed;
   z-index: 1;
@@ -80,7 +80,7 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
+.modal1-content {
   background-color: #fefefe;
   margin: 10% auto; /* 15% from the top and centered */
   padding: 20px;
@@ -89,18 +89,18 @@
   border-radius: 10px;
 }
 
-.modal-form {
+.modal1-form {
   display: flex;
   flex-direction: column;
 }
 
-.modal-form h1 {
+.modal1-form h1 {
   margin-bottom: 20px;
   font-size: 20px;
   font-weight: bold;
 }
 
-.modal-input {
+.modal1-input {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
@@ -109,12 +109,12 @@
   box-sizing: border-box;
 }
 
-.modalBtn_container {
+.modal1Btn_container {
   display: flex;
   margin-top: 15px;
 }
 
-.modal_btn {
+.modal1_btn {
   flex: 1;
   margin-right: 10px;
   padding: 8px 18px;
@@ -126,11 +126,11 @@
   margin: 10px;
 }
 
-.modal_btn:last-child {
+.modal1_btn:last-child {
   margin-right: 0;
 }
 
-.modal_btn:hover {
+.modal1_btn:hover {
   background-color: #3b82f6;
 }
 

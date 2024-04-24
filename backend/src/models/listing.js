@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
-const validator = require("validator");
 
 const listingSchema = new mongoose.Schema(
   {
     host: {
       type: mongoose.Schema.Types.ObjectId,
-      // required: true,
+      required: true,
       ref: "User",
     },
     category: {
@@ -84,8 +83,8 @@ const listingSchema = new mongoose.Schema(
       required: true,
     },
     averageRate: {
-      type: mongoose.Types.Decimal128,
-      // required: true,
+      type: Number,
+      default: 0,
     },
     isFavorite: {
       type: Boolean,

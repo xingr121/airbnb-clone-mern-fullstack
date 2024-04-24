@@ -8,7 +8,7 @@ import ListingCard from "../components/listing/ListingCard";
 import Search from "../components/header/Search";
 import { Card, Container, Row, Col, Spinner } from "react-bootstrap";
 import "../styles/Search.scss";
-
+import ListingGoogleMap from "../components/listing/ListingGoogleMap";
 import { MdMap } from "react-icons/md";
 
 function Home() {
@@ -18,6 +18,12 @@ function Home() {
   const [filteredListings, setFilteredListings] = useState([]);
 
   const [loading, setLoading] = useState(true);
+
+  const [showMap, setShowMap] = useState(false);
+
+  const toggleView = () => {
+    setShowMap(!showMap);
+  };
 
   // const location = useLocation();
   // const searchCriteria = location.state && location.state.searchCriteria;
@@ -69,7 +75,10 @@ function Home() {
   const startIdx = page * listingsPerPage;
   const endIdx = startIdx + listingsPerPage;
   const displayedListings = filteredListings.slice(startIdx, endIdx);
-
+  const containerStyle = {
+    width: "2000px",
+    height: "1000px",
+  };
   return (
     <>
       {/* <div className="search d-flex justify-content-center align align-items-center">
@@ -100,7 +109,7 @@ function Home() {
                       className="text-center fw-medium"
                       style={{ fontSize: "10px" }}
                     >
-                      {category.label}
+                      {category.label ? category.label : "All"}
                     </Card.Title>
                   </Card.Body>
                 </Card>
@@ -110,7 +119,7 @@ function Home() {
         </Container>
       </div>
       <div className="mb-5">
-        <div className="pt-0">
+        <div className={showMap ? "d-none" : "pt-0"} id="listingContainer">
           <Container>
             {loading ? (
               <Spinner animation="border" role="status">
@@ -139,6 +148,16 @@ function Home() {
             </div>
           </Container>
         </div>
+        <div
+          id="mapContainer"
+          className={showMap ? "" : "d-none"}
+          style={{ width: "100%", height: "100%" }}
+        >
+          <ListingGoogleMap
+            listings={filteredListings}
+            containerStyle={containerStyle}
+          />
+        </div>
       </div>
       <div
         className="
@@ -157,8 +176,9 @@ function Home() {
             translate-middle-x
           "
         style={{ cursor: "pointer", zIndex: 1000, bottom: "100px" }}
+        onClick={toggleView}
       >
-        Show Map
+        {showMap ? "Show List" : "Show Map"}
         <MdMap />
       </div>
     </>

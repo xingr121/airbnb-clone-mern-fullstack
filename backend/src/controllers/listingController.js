@@ -83,13 +83,13 @@ const constructSearchQuery = (queryParams) => {
     };
   }
 
-  // if (queryParams.averageRate) {
-  //   const starRatings = Array.isArray(queryParams.averageRate)
-  //     ? queryParams.averageRate.map((star) => parseInt(star))
-  //     : parseInt(queryParams.averageRate);
+  if (queryParams.averageRate) {
+    const starRatings = Array.isArray(queryParams.averageRate)
+      ? queryParams.averageRate.map((star) => parseInt(star))
+      : parseInt(queryParams.averageRate);
 
-  //   constructedQuery.averageRate = { $in: starRatings };
-  // }
+    constructedQuery.averageRate = { $in: starRatings };
+  }
 
   if (queryParams.maxPrice) {
     constructedQuery.pricePerNight = {
@@ -203,7 +203,7 @@ module.exports = {
   getListingBySearch: async (req, res) => {
     try {
       const query = constructSearchQuery(req.query);
-      const pageSize = 8;
+      const pageSize = 20;
       const pageNumber = parseInt(
         req.query.page ? req.query.page.toString() : "1"
       );

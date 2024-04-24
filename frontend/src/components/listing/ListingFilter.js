@@ -111,7 +111,7 @@ export default function ListingFilter({ setSelectedFilter }) {
             >
               <input
                 type="checkbox"
-                className="rounded"
+                className="rounded "
                 value={listingType.name}
                 checked={selectedTypes.includes(listingType.name)}
                 onChange={handleListingTypeChange}
@@ -133,7 +133,7 @@ export default function ListingFilter({ setSelectedFilter }) {
               <span>{facility.name}</span>
             </label>
           ))} */}
-          {/* <h4 className="text-md font-semibold mb-2">Listing Rating</h4>
+          <h4 className="text-md font-semibold mb-2">Listing Rating</h4>
           {["5", "4", "3", "2", "1"].map((star) => (
             <label className="flex items-center space-x-2">
               <input
@@ -145,7 +145,7 @@ export default function ListingFilter({ setSelectedFilter }) {
               />
               <span>{star} Stars</span>
             </label>
-          ))} */}
+          ))}
           <h4 className="text-md font-semibold mb-2">Rooms and Beds</h4>
           <div>
             <FormControl sx={{ m: 1, minWidth: 120 }}>

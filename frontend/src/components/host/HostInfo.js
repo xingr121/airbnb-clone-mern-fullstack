@@ -1,12 +1,40 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
-import { FaAngleRight } from "react-icons/fa6";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
 import "../../styles/ListingDetails.scss";
 import HostCard from "./HostCard";
+import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
+
+const BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:4000";
 
 function HostInfo({ listing }) {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { getAccessTokenSilently } = useAuth0();
+
+  const messageHost = async () => {
+    const accessToken = await getAccessTokenSilently();
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/chat`,
+        {
+          receiverId: listing.host._id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.data);
+      navigate(`/contact_host/${id}`);
+    } catch (error) {
+      console.error("Failed to add chat:", error);
+      // Handle error
+    }
+  };
 
   return (
     <div className="mt-4 pb-3">
@@ -15,9 +43,7 @@ function HostInfo({ listing }) {
       <Container className="host-container pb-4">
         <Row className="">
           <Col lg="5" className="">
-            <Link to="/host/profile" className="text-dark text-decoration-none">
-              {listing && listing.host && <HostCard listing={listing} />}
-            </Link>
+            {listing && listing.host && <HostCard listing={listing} />}
             {/* Information about the Host */}
             {/* To Delete */}
           </Col>
@@ -34,12 +60,12 @@ function HostInfo({ listing }) {
               <span>Response rate: 100%</span>
               <span>Responds within an hour</span>
 
-              <Link
-                to={`/contact_host/${id}`}
+              <Button
+                onClick={messageHost}
                 className="message-btn btn btn-dark px-4 py-3 mt-4 w-25"
               >
                 Message Host
-              </Link>
+              </Button>
             </div>
           </Col>
         </Row>

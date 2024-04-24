@@ -14,7 +14,6 @@ const getCurrentUser = async (req, res) => {
 
     currentUser.imageUrl = await getObjectSignedUrl(currentUser.imageName);
 
-    console.log(currentUser);
     res.json(currentUser);
   } catch (error) {
     res.status(500).json({ message: "something went wrong" });

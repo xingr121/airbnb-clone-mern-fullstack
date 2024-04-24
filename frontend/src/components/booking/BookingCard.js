@@ -7,7 +7,7 @@ import "../../styles/Card.scss";
 function BookingCard({ booking }) {
   const { signedUrls, city, country, _id } = booking.listing;
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -34,12 +34,12 @@ function BookingCard({ booking }) {
       const response = await axios.post(
         `${API_BASE_URL}/booking/cancel/${booking._id}`
       );
-      setShowModal(false); 
+      setShowModal(false);
       window.location.reload(); // To show the booking has been moved to Cancelled Trips
     } catch (error) {
       alert("Failed to cancel booking: " + error.message);
       console.error("Error cancelling booking:", error);
-      setShowModal(false); 
+      setShowModal(false);
     }
   };
 
@@ -101,7 +101,16 @@ function BookingCard({ booking }) {
         <Modal.Header closeButton>
           <Modal.Title>Cancel Booking</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to cancel this booking?</Modal.Body>
+        <Modal.Body>
+          <strong>Cancellation Confirmation</strong>
+          <br />
+          <br />
+          You are within the 48-hour window that allows for a full refund.
+          Please note that the refund may take up to 5 business days to process.
+          <br />
+          <br />
+          Are you sure you want to cancel your booking?
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Close

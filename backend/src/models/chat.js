@@ -1,23 +1,34 @@
 const mongoose = require("mongoose");
 
 const chatSchema = new mongoose.Schema({
-  participants: [
+  users: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "User",
     },
   ],
-  messages: [
+  userIDs: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Message",
+      type: String,
     },
   ],
   createdAt: {
     type: Date,
     default: Date.now,
-    immutable: true,
   },
+  seenBy: [
+    {
+      type: String,
+      ref: "User",
+    },
+  ],
+  messages: [
+    {
+      type: String,
+      ref: "Message",
+    },
+  ],
+  lastMessage: String,
 });
 
 const Chat = mongoose.model("Chat", chatSchema);
