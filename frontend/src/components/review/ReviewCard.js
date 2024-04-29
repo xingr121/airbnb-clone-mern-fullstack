@@ -72,7 +72,7 @@ function ReviewCard({ booking }) {
         toast.success("Review created successfully");
         setTimeout(() => {
           window.location.reload();
-        }, 3000);
+        }, 1000);
       } else {
         console.error("Failed to create review:", response.statusText);
         toast.error("Failed to create review. Please try again.");
@@ -114,7 +114,7 @@ function ReviewCard({ booking }) {
         toast.success("Review updated successfully");
         setTimeout(() => {
           window.location.reload();
-        }, 3000);
+        }, 1000);
       } else {
         console.error("Failed to update review:", response.statusText);
         toast.error("Failed to update review. Please try again.");
@@ -145,6 +145,7 @@ function ReviewCard({ booking }) {
 
   const handleDeleteClick = async (reviewId) => {
     try {
+      console.log("Before deleting review:", reviewId);
       toast.info(
         <div className="confirmation-toast">
           <div className="message">
@@ -166,11 +167,13 @@ function ReviewCard({ booking }) {
                     }
                   );
 
+                  console.log("After deleting review:", reviewId);
+
                   if (response.ok) {
                     toast.success("Review deleted successfully");
                     setTimeout(() => {
                       window.location.reload();
-                    }, 3000);
+                    }, 1000);
                   } else {
                     console.error(
                       "Failed to delete review:",
@@ -205,14 +208,7 @@ function ReviewCard({ booking }) {
   };
 
   return (
-    <div
-      className="d-flex flex-row mb-4"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 2fr 2fr",
-        gap: "50px",
-      }}
-    >
+    <div className="d-flex flex-row mb-4">
       <Link
         to={`/listings/${_id}`}
         style={{ cursor: "pointer" }}
@@ -227,7 +223,10 @@ function ReviewCard({ booking }) {
           />
         </Card>
       </Link>
-      <div className="d-flex flex-column">
+      <div
+        className="d-flex flex-column"
+        style={{ marginLeft: "50px", width: "350px" }}
+      >
         <h6
           className="booking_location d-flex text-dark text-opacity-75"
           style={{
@@ -238,10 +237,16 @@ function ReviewCard({ booking }) {
         >
           {type} in {city}
         </h6>
-        <span className="text-info text-dark text-opacity-75">
+        <span
+          className="text-info text-dark text-opacity-75"
+          style={{ fontSize: "15px" }}
+        >
           Hosted By {booking.listing.host?.username}
         </span>
-        <span className="text-info text-dark text-opacity-75">
+        <span
+          className="text-info text-dark text-opacity-75"
+          style={{ fontSize: "15px", marginBottom: "5px" }}
+        >
           {formatDate(booking.checkInDate)} - {formatDate(booking.checkOutDate)}
         </span>
         {reviews.filter(
@@ -283,12 +288,18 @@ function ReviewCard({ booking }) {
               Review for {booking.listing.host?.username}
             </h6>
             <div>
-              <span className="text-info text-dark text-opacity-75">
+              <span
+                className="text-info text-dark text-opacity-75"
+                style={{ fontSize: "15px" }}
+              >
                 Review: {review.reviewText}
               </span>
             </div>
-            <div>
-              <span className="text-info text-dark text-opacity-75">
+            <div style={{ marginBottom: "5px" }}>
+              <span
+                className="text-info text-dark text-opacity-75"
+                style={{ fontSize: "15px" }}
+              >
                 Rating: {renderStars(review.rating)}
               </span>
             </div>

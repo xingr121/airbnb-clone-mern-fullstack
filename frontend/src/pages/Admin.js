@@ -154,7 +154,9 @@ function Admin() {
 
   return (
     <div className="container mt-5">
-      <h1 className="adminHeading">Manage Users Account</h1>
+      <h1 className="text-center" style={{ color: "#24355A" }}>
+        Manage User Account
+      </h1>
       <div className="adminPanel">
         <div className="adminContainer">
           <div className="adminTable">
@@ -199,16 +201,8 @@ function Admin() {
         {/* Modal */}
         <div id="myModal" className="modal1">
           <div className="modal1-content">
-            <span
-              className="close"
-              onClick={() =>
-                (document.getElementById("myModal").style.display = "none")
-              }
-            >
-              &times;
-            </span>
             <form className="modal1-form">
-              <h1>Edit User</h1>
+              <h1>Edit User Account</h1>
               <div className="box">
                 <label htmlFor="username">Username:</label>
                 <input

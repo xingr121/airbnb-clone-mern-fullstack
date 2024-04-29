@@ -109,7 +109,6 @@ const SearchPage = () => {
                 start: parseISO(booking.checkInDate),
                 end: parseISO(booking.checkOutDate),
               }));
-
               return bookedDates.flatMap((d) => {
                 const range = [];
                 let current = new Date(d.start);

@@ -2,15 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Form, Button, Image } from "react-bootstrap";
 import ProfileNav from "../shared/ProfileNav";
 import "../styles/Profile.scss";
-// import Avatar from "../assets/images/avatar.jpg";
 import { useGetMyUser, useUpdateMyUser } from "../api/UserApi";
 import { toast } from "react-toastify";
-// import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const { currentUser, isLoading: isGetLoading } = useGetMyUser();
   const { updateUser, isLoading: isUpdateLoading } = useUpdateMyUser();
-  // const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -18,8 +15,9 @@ function Profile() {
     city: "",
     country: "",
     phone: "",
-    image: null, // For file upload
+    image: null,
   });
+
   useEffect(() => {
     if (currentUser) {
       setFormData({
@@ -28,10 +26,11 @@ function Profile() {
         city: currentUser.city,
         country: currentUser.country,
         phone: currentUser.phone,
-        image: null, // reset image to null
+        image: null,
       });
     }
   }, [currentUser]);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -49,6 +48,18 @@ function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate form fields
+    if (
+      !formData.username ||
+      !formData.address ||
+      !formData.city ||
+      !formData.country ||
+      !formData.phone
+    ) {
+      toast.error("All fields are required");
+      return;
+    }
+
     try {
       const formDataForUpdate = new FormData();
       formDataForUpdate.append("username", formData.username);
@@ -60,17 +71,8 @@ function Profile() {
         formDataForUpdate.append("image", formData.image);
       }
       await updateUser(formDataForUpdate);
-      toast.success("user update successfully", {
-        position: "top-right",
-        autoClose: false,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      // navigate("/");
+      toast.success("User updated successfully");
+      window.location.reload(); // Refresh the page after updating profile
     } catch (error) {
       toast.error(error.toString());
     }
@@ -87,7 +89,7 @@ function Profile() {
   return (
     <div className="profile">
       <ProfileNav />
-      <h1 className="text-center">User Profile</h1>
+      <h1 className="text-center">My Profile</h1>
       <Form onSubmit={handleSubmit}>
         <div className="profile_form d-flex flex-row justify-content-center align-items-center shadow">
           <div className="mb-4 text-center d-flex flex-column px-5">

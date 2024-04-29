@@ -53,7 +53,6 @@ function Pin({ listing }) {
               <Link to={`/listings/${listing._id}`}>
                 {listing.pricePerNight["$numberDecimal"]} PerNight
               </Link>
-              <b>Verified Listing</b>
             </div>
           </div>
         </InfoWindow>

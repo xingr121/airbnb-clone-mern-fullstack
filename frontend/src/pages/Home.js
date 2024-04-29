@@ -1,32 +1,80 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 import categories from "../components/category/CategoriesList";
-import { CategoryCard } from "../components/category/CategoryCard";
-// import Listings from "../components/listing/Listings";
 import ListingCard from "../components/listing/ListingCard";
-import Search from "../components/header/Search";
 import { Card, Container, Row, Col, Spinner } from "react-bootstrap";
 import "../styles/Search.scss";
 import ListingGoogleMap from "../components/listing/ListingGoogleMap";
 import { MdMap } from "react-icons/md";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
+function NextArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={`${className} next-arrow`}
+      style={{
+        ...style,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "40px",
+        height: "40px",
+        borderRadius: "50%",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        color: "white",
+        cursor: "pointer",
+        outline: "none",
+      }}
+      onClick={onClick}
+      tabIndex={0}
+    >
+      <FaChevronLeft />
+    </div>
+  );
+}
+
+function PrevArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={`${className} prev-arrow`}
+      style={{
+        ...style,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "40px",
+        height: "40px",
+        borderRadius: "50%",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        color: "white",
+        cursor: "pointer",
+        outline: "none",
+        zIndex: "1",
+      }}
+      onClick={onClick}
+      tabIndex={0}
+    >
+      <FaChevronRight />
+    </div>
+  );
+}
 
 function Home() {
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   const [allListings, setAllListings] = useState([]);
   const [filteredListings, setFilteredListings] = useState([]);
-
   const [loading, setLoading] = useState(true);
-
   const [showMap, setShowMap] = useState(false);
 
   const toggleView = () => {
     setShowMap(!showMap);
   };
-
-  // const location = useLocation();
-  // const searchCriteria = location.state && location.state.searchCriteria;
 
   const [pageCount, setPageCount] = useState(0);
   const [page, setPage] = useState(0);
@@ -49,28 +97,6 @@ function Home() {
   const handleCategoryClick = (label) => {
     setCategory(label);
   };
-  // const updateFilteredListings = (searchCriteria) => {
-  //   const { location, price, guestCount } = searchCriteria;
-
-  //   console.log("Filtering with criteria:", searchCriteria);
-
-  //   const filtered = allListings.filter((listing) => {
-  //     const destinationMatch =
-  //       listing.city.toLowerCase().includes(location.toLowerCase()) ||
-  //       listing.country.toLowerCase().includes(location.toLowerCase()) ||
-  //       listing.province.toLowerCase().includes(location.toLowerCase());
-
-  //     const priceMatch = Number(listing.price) <= Number(price);
-  //     const guestCountMatch = listing.guestCount >= guestCount;
-
-  //     return destinationMatch && priceMatch && guestCountMatch;
-  //   });
-
-  //   console.log("Filtered listings:", filtered);
-
-  //   setFilteredListings(filtered);
-  //   setPage(0);
-  // };
 
   const startIdx = page * listingsPerPage;
   const endIdx = startIdx + listingsPerPage;
@@ -79,21 +105,25 @@ function Home() {
     width: "2000px",
     height: "1000px",
   };
+
+  const settings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 8,
+    slidesToScroll: 2,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+  };
   return (
     <>
-      {/* <div className="search d-flex justify-content-center align align-items-center">
-        <Search onSearch={updateFilteredListings} />
-      </div> */}
-      <div className="mb-5">
-        <Container>
-          <div
-            className="d-flex flex-row align-items-center justify-content-between overflow-x-auto"
-            style={{ marginTop: "100px" }}
-          >
+      <div className="slider-container mb-5">
+        <Container style={{ marginTop: "50px" }}>
+          <Slider {...settings}>
             {categories.map((category) => (
               <div key={category.label}>
                 <Card
-                  className="rounded-circle border-0 shadow-sm"
+                  className="rounded-circle border-0"
                   style={{
                     width: "80px",
                     height: "80px",
@@ -103,7 +133,7 @@ function Home() {
                 >
                   <Card.Body className="d-flex flex-column align-items-center justify-content-center">
                     <div className="text-center mb-3">
-                      <category.Icon size={20} />
+                      <category.Icon size={18} />
                     </div>
                     <Card.Title
                       className="text-center fw-medium"
@@ -115,7 +145,7 @@ function Home() {
                 </Card>
               </div>
             ))}
-          </div>
+          </Slider>
         </Container>
       </div>
       <div className="mb-5">
@@ -126,7 +156,7 @@ function Home() {
                 <span className="visually-hidden">Fetching Listings...</span>
               </Spinner>
             ) : (
-              <Row>
+              <Row xs={1} sm={2} md={2} lg={4}>
                 {displayedListings.map((listing) => (
                   <Col lg="3" className="mb-4" key={listing._id}>
                     <ListingCard listing={listing} />

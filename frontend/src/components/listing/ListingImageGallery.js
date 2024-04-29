@@ -24,14 +24,7 @@ function ListingImageGallery({ listing }) {
               className="listing-photo"
             />
           </Link>
-          <span className="">
-            <Link
-              to={`/listings/gallery/${listing._id}`}
-              className="btn btn-light all-photos rounded-pill"
-            >
-              <TbGridDots /> Show all photos
-            </Link>
-          </span>
+          <span className=""></span>
         </div>
 
         {/* Other Photo */}

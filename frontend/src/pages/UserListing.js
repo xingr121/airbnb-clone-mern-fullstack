@@ -106,8 +106,11 @@ function UserListing() {
 
   return (
     <>
+      <ProfileNav />
       <div className="container mt-5">
-        <h1 className="adminHeading">Manage My Accomodations</h1>
+        <h1 className="text-center" style={{ color: "#24355A" }}>
+          My Accomodations
+        </h1>
         <div className="adminPanel">
           <div className="adminContainer">
             <div className="adminTable">

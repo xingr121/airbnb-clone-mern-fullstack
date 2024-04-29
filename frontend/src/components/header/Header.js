@@ -11,20 +11,6 @@ import avatar from "../../assets/images/avatar.jpg";
 
 function Header() {
   const { loginWithRedirect, isAuthenticated } = useAuth0();
-  // const navigate = useNavigate();
-
-  // const handleSearch = ({ location, guestCount, price }) => {
-  //   navigate({
-  //     pathname: "/",
-  //     state: {
-  //       searchCriteria: {
-  //         location,
-  //         guestCount,
-  //         price,
-  //       },
-  //     },
-  //   });
-  // };
   return (
     <Container>
       <div className="fixed-top bg-white shadow-sm w-100 p-3">

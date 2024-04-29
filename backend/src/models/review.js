@@ -63,6 +63,46 @@ reviewSchema.post("save", async function (review) {
   }
 });
 
+// Middleware to update the associated listing when a review is deleted
+reviewSchema.post("remove", async function (review) {
+  const Listing = mongoose.model("Listing");
+
+  try {
+    // Retrieve the associated listing
+    const listing = await Listing.findById(review.listing);
+
+    if (!listing) {
+      throw new Error("Associated listing not found.");
+    }
+
+    // Find all reviews for the listing excluding the removed one
+    const remainingReviews = await Review.find({
+      listing: listing._id,
+      _id: { $ne: review._id },
+    });
+
+    // Calculate the total rating
+    let totalRating = 0;
+    if (remainingReviews.length > 0) {
+      totalRating = remainingReviews.reduce(
+        (acc, review) => acc + review.rating,
+        0
+      );
+    }
+
+    // Update the listing's average rating
+    listing.averageRate =
+      remainingReviews.length > 0 ? totalRating / remainingReviews.length : 0;
+
+    // Save the updated listing
+    await listing.save();
+
+    console.log("Listing Updated Successfully");
+  } catch (error) {
+    console.error("Error updating listing:", error);
+  }
+});
+
 const Review = mongoose.model("Review", reviewSchema);
 
 module.exports = Review;

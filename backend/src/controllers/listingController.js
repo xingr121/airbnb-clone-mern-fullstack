@@ -203,7 +203,7 @@ module.exports = {
   getListingBySearch: async (req, res) => {
     try {
       const query = constructSearchQuery(req.query);
-      const pageSize = 20;
+      const pageSize = 9;
       const pageNumber = parseInt(
         req.query.page ? req.query.page.toString() : "1"
       );
@@ -352,24 +352,66 @@ module.exports = {
         // Delete existing photos from S3
         await Promise.all(
           listing.listingPhotoPaths.map(async (imagePath) => {
-            await deleteFile(imagePath);
+            try {
+              await deleteFile(imagePath);
+            } catch (error) {
+              console.error("Failed to delete existing photo:", error);
+            }
           })
         );
 
         // Upload new photos to S3
         await Promise.all(
           updateParams.listingPhotoPaths.map(async (imagePath) => {
-            await uploadFile(
-              imagePath,
-              imagePath.split("/").pop(),
-              "image/jpeg"
-            );
+            try {
+              await uploadFile(
+                imagePath,
+                imagePath.split("/").pop(),
+                "image/jpeg"
+              );
+            } catch (error) {
+              console.error("Failed to upload new photo:", error);
+            }
           })
         );
       }
 
-      // Update the listing in the database
-      await Listing.findByIdAndUpdate(listingId, updateParams);
+      // Update other data fields of the listing
+      console.log("Before update - listing:", listing); // Debugging
+      console.log("Update params:", updateParams); // Debugging
+
+      // Update fields individually
+      if (updateParams.location) {
+        listing.street = updateParams.location.street || listing.street;
+        listing.aptSuite = updateParams.location.aptSuite || listing.aptSuite;
+        listing.city = updateParams.location.city || listing.city;
+        listing.province = updateParams.location.province || listing.province;
+        listing.country = updateParams.location.country || listing.country;
+      }
+
+      listing.category = updateParams.category || listing.category;
+      listing.type = updateParams.type || listing.type;
+      listing.guestCount = updateParams.guestCount || listing.guestCount;
+      listing.bedroomCount = updateParams.bedroomCount || listing.bedroomCount;
+      listing.bedCount = updateParams.bedCount || listing.bedCount;
+      listing.bathroomCount =
+        updateParams.bathroomCount || listing.bathroomCount;
+      listing.amenities = updateParams.amenities || listing.amenities;
+      listing.listingPhotoPaths =
+        updateParams.photos || listing.listingPhotoPaths;
+
+      // Update description field if provided
+      if (updateParams.description) {
+        listing.title = updateParams.description.title || listing.title;
+        listing.description =
+          updateParams.description.description || listing.description;
+        listing.pricePerNight =
+          updateParams.description.pricePerNight || listing.pricePerNight;
+      }
+
+      // Save the updated listing
+      await listing.save();
+      console.log("Listing updated successfully"); // Debugging
       res.status(200).json({ message: "Listing updated successfully" });
     } catch (err) {
       console.error("Failed to update listing:", err);

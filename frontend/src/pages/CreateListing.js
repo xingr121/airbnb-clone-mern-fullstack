@@ -7,7 +7,6 @@ import variables from "../styles/variables.scss";
 import { IoIosImages } from "react-icons/io";
 import { BiTrash } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import ProfileNav from "../shared/ProfileNav";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -173,7 +172,6 @@ const CreateListing = () => {
 
   return (
     <>
-      <ProfileNav />
       <div className="create-listing">
         <h1>Publish Your Place</h1>
         <form onSubmit={handlePost}>

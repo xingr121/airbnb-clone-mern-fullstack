@@ -58,7 +58,7 @@ module.exports = {
           quantity: item.quantity,
         })),
         mode: "payment",
-        success_url: `${redirectUrl}/payment-details?session_id={CHECKOUT_SESSION_ID}`,
+        success_url: `${redirectUrl}/account/bookings`,
         cancel_url: `${redirectUrl}/payment-canceled`,
       });
 

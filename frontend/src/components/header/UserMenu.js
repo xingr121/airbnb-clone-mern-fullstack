@@ -4,6 +4,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import avatar from "../../assets/images/avatar.jpg";
 import MenuItem from "./MenuItem";
 import { useGetMyUser } from "../../api/UserApi";
+import "../../styles/UserMenu.scss";
 
 function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,9 +54,9 @@ function UserMenu() {
   }, []);
 
   return (
-    <div className="position-relative">
-      <div className="d-flex flex-row align-items-center gap-3">
-        <div className="p-2 rounded-pill">Airbnb your home</div>
+    <div className="Menu-container position-relative">
+      <div className="Menu-box d-flex flex-row align-items-center gap-3">
+        <div className="slogan p-2 rounded-pill">Airbnb your home</div>
         <div
           ref={menuRef}
           className="
@@ -75,20 +76,21 @@ function UserMenu() {
           <AiOutlineMenu />
           {/*Retrieve User profile picture */}
           <img
-            className="rounded-circle"
+            className="user-avatar rounded-circle"
             src={user.picture || avatar}
             alt="profile"
             width="30"
             height="30"
           />
           {/* Retrieve from Auth0 username */}
-          {user.username}
+          <span className="current-user">{user.username}</span>
         </div>
       </div>
 
       {isOpen && (
         <div
           className="
+          
             position-absolute 
             rounded 
             shadow-md

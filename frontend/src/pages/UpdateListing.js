@@ -1,23 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/CreateListing.scss";
 import { categories, types, facilities } from "../assets/data/data";
 
 import { RemoveCircleOutline, AddCircleOutline } from "@mui/icons-material";
 import variables from "../styles/variables.scss";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import "../styles/confirmationToast.scss"; // to check error
 import { IoIosImages } from "react-icons/io";
 import { useState } from "react";
 import { BiTrash } from "react-icons/bi";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import ProfileNav from "../shared/ProfileNav";
+import { useAuth0 } from "@auth0/auth0-react";
 
-const CreateListing = () => {
+const UpdateListing = () => {
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+  const { id } = useParams();
+  const { getAccessTokenSilently } = useAuth0();
+  const navigate = useNavigate();
+
+  // State variables for form fields
   const [category, setCategory] = useState("");
   const [type, setType] = useState("");
-
-  /* LOCATION */
   const [formLocation, setFormLocation] = useState({
     street: "",
     aptSuite: "",
@@ -25,133 +31,173 @@ const CreateListing = () => {
     province: "",
     country: "",
   });
+  const [guestCount, setGuestCount] = useState(null);
+  const [bedroomCount, setBedroomCount] = useState(null);
+  const [bedCount, setBedCount] = useState(null);
+  const [bathroomCount, setBathroomCount] = useState(null);
+  const [amenities, setAmenities] = useState([]);
+  const [photos, setPhotos] = useState([]);
+  const [formDescription, setFormDescription] = useState({
+    title: "",
+    description: "",
+    pricePerNight: null,
+  });
 
+  useEffect(() => {
+    // Fetch listing data
+    const fetchListingData = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently();
+        const response = await fetch(`${API_BASE_URL}/listing/${id}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          // Update form fields with fetched data
+          setCategory(data.category);
+          setType(data.type);
+          setFormLocation({
+            street: data.street,
+            aptSuite: data.aptSuite,
+            city: data.city,
+            province: data.province,
+            country: data.country,
+          });
+          setGuestCount(data.guestCount);
+          setBedroomCount(data.bedroomCount);
+          setBedCount(data.bedCount);
+          setBathroomCount(data.bathroomCount);
+          setFormDescription({
+            title: data.title,
+            description: data.description,
+            pricePerNight:
+              data.pricePerNight &&
+              parseFloat(data.pricePerNight.$numberDecimal),
+          });
+          // Set amenities
+          const amenitiesArray = data.amenities[0].split(",");
+          setAmenities(amenitiesArray);
+          // Set photos
+          setPhotos(data.signedUrls);
+        } else {
+          console.error("Failed to fetch listing data:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Failed to fetch listing data:", error.message);
+      }
+    };
+
+    fetchListingData();
+  }, [id, getAccessTokenSilently]);
+
+  // Function to handle location change
   const handleChangeLocation = (e) => {
     const { name, value } = e.target;
-    setFormLocation({
-      ...formLocation,
+    setFormLocation((prevState) => ({
+      ...prevState,
       [name]: value,
+    }));
+  };
+
+  // Function to handle amenity selection
+  const handleSelectAmenities = (amenityName) => {
+    setAmenities((prevAmenities) => {
+      if (prevAmenities.includes(amenityName)) {
+        return prevAmenities.filter((amenity) => amenity !== amenityName);
+      } else {
+        return [...prevAmenities, amenityName];
+      }
     });
   };
 
-  /* BASIC COUNTS */
-  const [guestCount, setGuestCount] = useState(1);
-  const [bedroomCount, setBedroomCount] = useState(1);
-  const [bedCount, setBedCount] = useState(1);
-  const [bathroomCount, setBathroomCount] = useState(1);
-
-  /* AMENITIES */
-  const [amenities, setAmenities] = useState([]);
-
-  const handleSelectAmenities = (facility) => {
-    if (amenities.includes(facility)) {
-      setAmenities((prevAmenities) =>
-        prevAmenities.filter((option) => option !== facility)
-      );
-    } else {
-      setAmenities((prev) => [...prev, facility]);
-    }
-  };
-
-  /* UPLOAD, DRAG & DROP, REMOVE PHOTOS */
-  const [photos, setPhotos] = useState([]);
-
+  // Function to handle photo upload
   const handleUploadPhotos = (e) => {
-    const newPhotos = e.target.files;
-    setPhotos((prevPhotos) => [...prevPhotos, ...newPhotos]);
+    const files = Array.from(e.target.files);
+    setPhotos((prevPhotos) => [...prevPhotos, ...files]);
   };
 
-  const handleDragPhoto = (result) => {
-    if (!result.destination) return;
-
-    const items = Array.from(photos);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    setPhotos(items);
-  };
-
+  // Function to handle photo removal
   const handleRemovePhoto = (indexToRemove) => {
     setPhotos((prevPhotos) =>
       prevPhotos.filter((_, index) => index !== indexToRemove)
     );
   };
 
-  /* DESCRIPTION */
-  const [formDescription, setFormDescription] = useState({
-    title: "",
-    description: "",
-    pricePerNight: 0,
-  });
-
+  // Function to handle description change
   const handleChangeDescription = (e) => {
     const { name, value } = e.target;
-    setFormDescription({
-      ...formDescription,
+    setFormDescription((prevState) => ({
+      ...prevState,
       [name]: value,
-    });
+    }));
   };
 
-  const navigate = useNavigate();
-
-  const handlePost = async (e) => {
+  // Function to handle form submission
+  const handleUpdate = async (e) => {
     e.preventDefault();
 
     try {
-      /* Create a new FormData object to handle file uploads */
-      const listingForm = new FormData();
-      // listingForm.append("host", hostId);
-      listingForm.append("category", category);
-      listingForm.append("type", type);
-      listingForm.append("street", formLocation.street);
-      listingForm.append("aptSuite", formLocation.aptSuite);
-      listingForm.append("city", formLocation.city);
-      listingForm.append("province", formLocation.province);
-      listingForm.append("country", formLocation.country);
-      listingForm.append("guestCount", guestCount);
-      listingForm.append("bedroomCount", bedroomCount);
-      listingForm.append("bedCount", bedCount);
-      listingForm.append("bathroomCount", bathroomCount);
-      listingForm.append("amenities", amenities);
-      listingForm.append("title", formDescription.title);
-      listingForm.append("description", formDescription.description);
-      listingForm.append("pricePerNight", formDescription.pricePerNight);
+      // Prepare the updated listing data
+      const updatedListingData = {
+        category,
+        type,
+        location: {
+          street: formLocation.street,
+          aptSuite: formLocation.aptSuite,
+          city: formLocation.city,
+          province: formLocation.province,
+          country: formLocation.country,
+        },
+        guestCount,
+        bedroomCount,
+        bedCount,
+        bathroomCount,
+        amenities,
+        photos,
+        description: {
+          title: formDescription.title,
+          description: formDescription.description,
+          pricePerNight: formDescription.pricePerNight,
+        },
+      };
 
-      /* Append each selected photos to the FormData object */
-      photos.forEach((photo) => {
-        listingForm.append("listingPhotos", photo);
+      console.log("Updated Listing Data:", updatedListingData);
+
+      const accessToken = await getAccessTokenSilently();
+
+      // Send a PUT request to update the listing
+      const response = await fetch(`${API_BASE_URL}/listing/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(updatedListingData),
       });
 
-      /* Send a POST request to server */
-      const response = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}/listing/create`,
-        {
-          method: "POST",
-          body: listingForm,
-        }
-      );
+      console.log("Response:", response);
 
       if (response.ok) {
-        const responseData = await response.json();
-        if (responseData && responseData.listingPhotoPaths) {
-          navigate("/");
-        } else {
-          console.error("Failed to upload listing photos.");
-        }
+        console.log("Listing updated successfully");
+        toast.success("Listing updated successfully");
+        navigate("/account/listings");
       } else {
-        console.error("Failed to create listing:", response.statusText);
+        console.error("Failed to update listing:", response.statusText);
+        toast.error("Failed to update listing");
       }
-    } catch (err) {
-      console.error("Publish Listing Failed", err.message);
+    } catch (error) {
+      console.error("Failed to update listing:", error.message);
+      toast.error("Failed to update listing");
     }
   };
 
   return (
     <>
-      <ProfileNav />
       <div className="create-listing">
-        <h1>Publish Your Place</h1>
-        <form onSubmit={handlePost}>
+        <h1>Update Your Place</h1>
+        <form onSubmit={handleUpdate}>
           <div className="create-listing_step1">
             <h2>Step 1: Tell us about your place</h2>
             <hr />
@@ -212,7 +258,6 @@ const CreateListing = () => {
                   name="aptSuite"
                   value={formLocation.aptSuite}
                   onChange={handleChangeLocation}
-                  required
                 />
               </div>
               <div className="location">
@@ -386,84 +431,56 @@ const CreateListing = () => {
             </div>
 
             <h3>Add some photos of your place</h3>
-            <DragDropContext onDragEnd={handleDragPhoto}>
-              <Droppable droppableId="photos" direction="horizontal">
-                {(provided) => (
-                  <div
-                    className="photos"
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    {photos.length < 1 && (
-                      <>
-                        <input
-                          id="image"
-                          type="file"
-                          style={{ display: "none" }}
-                          accept="image/*"
-                          onChange={handleUploadPhotos}
-                          multiple
-                        />
-                        <label htmlFor="image" className="alone">
-                          <div className="icon">
-                            <IoIosImages />
-                          </div>
-                          <p>Upload from your device</p>
-                        </label>
-                      </>
-                    )}
+            <div className="photos">
+              {photos.length < 1 && (
+                <>
+                  <input
+                    id="image"
+                    type="file"
+                    style={{ display: "none" }}
+                    accept="image/*"
+                    onChange={handleUploadPhotos}
+                    multiple
+                  />
+                  <label htmlFor="image" className="alone">
+                    <div className="icon">
+                      <IoIosImages />
+                    </div>
+                    <p>Upload from your device</p>
+                  </label>
+                </>
+              )}
 
-                    {photos.length >= 1 && (
-                      <>
-                        {photos.map((photo, index) => {
-                          return (
-                            <Draggable
-                              key={index}
-                              draggableId={index.toString()}
-                              index={index}
-                            >
-                              {(provided) => (
-                                <div
-                                  className="photo"
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                >
-                                  <img
-                                    src={URL.createObjectURL(photo)}
-                                    alt="place"
-                                  />
-                                  <button
-                                    type="button"
-                                    onClick={() => handleRemovePhoto(index)}
-                                  >
-                                    <BiTrash />
-                                  </button>
-                                </div>
-                              )}
-                            </Draggable>
-                          );
-                        })}
-                        <input
-                          id="image"
-                          type="file"
-                          style={{ display: "none" }}
-                          accept="image/*"
-                          onChange={handleUploadPhotos}
-                          multiple
-                        />
-                        <label htmlFor="image" className="together">
-                          <div className="icon">
-                            <IoIosImages />
-                          </div>
-                          <p>Upload from your device</p>
-                        </label>
-                      </>
-                    )}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
+              {photos.length >= 1 && (
+                <>
+                  {photos.map((photoUrl, index) => (
+                    <div key={index} className="photo">
+                      <img src={photoUrl} alt={`Uploaded place ${index + 1}`} />
+                      <button
+                        type="button"
+                        onClick={() => handleRemovePhoto(index)}
+                      >
+                        <BiTrash />
+                      </button>
+                    </div>
+                  ))}
+                  <input
+                    id="image"
+                    type="file"
+                    style={{ display: "none" }}
+                    accept="image/*"
+                    onChange={handleUploadPhotos}
+                    multiple
+                  />
+                  <label htmlFor="image" className="together">
+                    <div className="icon">
+                      <IoIosImages />
+                    </div>
+                    <p>Upload more photos</p>
+                  </label>
+                </>
+              )}
+            </div>
 
             <h3>What make your place attractive and exciting?</h3>
             <div className="description">
@@ -489,7 +506,6 @@ const CreateListing = () => {
               <span>$</span>
               <input
                 type="number"
-                placeholder="100"
                 name="pricePerNight"
                 value={formDescription.pricePerNight}
                 onChange={handleChangeDescription}
@@ -500,7 +516,7 @@ const CreateListing = () => {
           </div>
 
           <button className="submit_btn" type="submit">
-            CREATE YOUR LISTING
+            UPDATE LISTING
           </button>
         </form>
       </div>
@@ -508,4 +524,4 @@ const CreateListing = () => {
   );
 };
 
-export default CreateListing;
+export default UpdateListing;

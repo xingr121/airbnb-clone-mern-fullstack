@@ -101,13 +101,24 @@ export default function ListingFilter({ setSelectedFilter }) {
         }}
         maxWidth="lg"
       >
-        <DialogTitle>Filter</DialogTitle>
+        <DialogTitle
+          style={{
+            fontSize: "25px",
+          }}
+        >
+          Filter
+        </DialogTitle>
         <DialogContent>
-          <h4 className="text-md font-semibold mb-2">Type of listing:</h4>
+          <h5 className="text-md font-semibold mb-2">Type of listing:</h5>
           {types.map((listingType) => (
             <label
               className="flex items-center space-x-2"
               key={listingType.name}
+              style={{
+                marginRight: "15px",
+                fontSize: "15px",
+                marginBottom: "20px",
+              }}
             >
               <input
                 type="checkbox"
@@ -133,9 +144,16 @@ export default function ListingFilter({ setSelectedFilter }) {
               <span>{facility.name}</span>
             </label>
           ))} */}
-          <h4 className="text-md font-semibold mb-2">Listing Rating</h4>
+          <h5 className="text-md font-semibold mb-2">Listing Rating</h5>
           {["5", "4", "3", "2", "1"].map((star) => (
-            <label className="flex items-center space-x-2">
+            <label
+              className="flex items-center space-x-2"
+              style={{
+                marginRight: "15px",
+                fontSize: "15px",
+                marginBottom: "20px",
+              }}
+            >
               <input
                 type="checkbox"
                 className="rounded"
@@ -146,10 +164,20 @@ export default function ListingFilter({ setSelectedFilter }) {
               <span>{star} Stars</span>
             </label>
           ))}
-          <h4 className="text-md font-semibold mb-2">Rooms and Beds</h4>
+          <h5 className="text-md font-semibold mb-2">Rooms and Beds</h5>
           <div>
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-helper-label">
+            <FormControl
+              sx={{ m: 1, minWidth: 120 }}
+              style={{
+                marginBottom: "20px",
+              }}
+            >
+              <InputLabel
+                id="demo-simple-select-helper-label"
+                style={{
+                  fontSize: "15px",
+                }}
+              >
                 Bedrooms
               </InputLabel>
               <Select
@@ -203,14 +231,21 @@ export default function ListingFilter({ setSelectedFilter }) {
                 <MenuItem value={3}>3+</MenuItem>
               </Select>
             </FormControl>
-            <h4 className="text-md font-semibold mb-2"> Max Price</h4>
+            <h5 className="text-md font-semibold mb-2"> Max Price</h5>
             <select
               className="p-2 border rounded-md w-full"
               value={selectedPrice}
               onChange={handlePriceChange}
             >
-              <option value="">Select Max Price</option>
-              {[50, 100, 200, 300, 500].map((price) => (
+              <option
+                value=""
+                style={{
+                  fontSize: "15px",
+                }}
+              >
+                Select Max Price
+              </option>
+              {[100, 300, 500, 800, 1000, 1500].map((price) => (
                 <option value={price}>{price}</option>
               ))}
             </select>

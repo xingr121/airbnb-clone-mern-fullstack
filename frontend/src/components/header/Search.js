@@ -4,22 +4,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSearchContext } from "../../auth/SearchContext";
 import { useNavigate } from "react-router-dom";
+import "../../styles/Search.scss";
 function Search() {
-  // const [location, setLocation] = useState("");
-  // // const [dateRange, setDateRange] = useState("");
-  // const [guestCount, setGuestCount] = useState(null);
-  // const [price, setPrice] = useState(null);
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const searchCriteria = {
-  //     location,
-  //     guestCount,
-  //     price,
-  //   };
-  //   console.log("Search submitted:", { location, guestCount, price });
-  //   onSearch(searchCriteria);
-  // };
   const navigate = useNavigate();
   const search = useSearchContext();
 
@@ -39,22 +25,24 @@ function Search() {
 
   return (
     <form
-      className="d-flex gap-2 border border-gray-300 rounded-pill py-2 px-4 shadow"
+      className="searchbar d-flex gap-2 border border-gray-300 rounded-pill py-1 px-4 shadow align-items-center"
       onSubmit={handleSubmit}
     >
-      <input
-        type="text"
-        placeholder="Anywhere"
-        value={destination || ""}
-        onChange={(e) => setDestination(e.target.value)}
-        className="border-0 w-75"
-      />
-      <div className="flex border border-gray-300"></div>
+      <div className="d-flex flex-column p-1">
+        <span>Where</span>
+        <input
+          type="text"
+          placeholder="Anywhere"
+          value={destination || ""}
+          onChange={(e) => setDestination(e.target.value)}
+          className="border-0 search-input w-100 p-1"
+        />
+      </div>
       <div>
-        <span>checkin</span>
+        <span>Check-in</span>
         <DatePicker
-          placeholderText="Check-in Date"
-          className="min-w-full bg-white p-2 border-0"
+          placeholderText="Add Date"
+          className="w-75 bg-white p-1 border-0 checkin"
           wrapperClassName="min-w-full"
           selected={checkIn}
           onChange={(date) => setCheckIn(date)}
@@ -66,25 +54,22 @@ function Search() {
         />
       </div>
       <div>
-        <span>checkout</span>
+        <span>Check-out</span>
         <DatePicker
-          placeholderText="Check-out Date"
-          className="min-w-full bg-white p-2 border-0"
+          placeholderText="Add Date"
+          className="w-75 bg-white p-1 border-0 checkout"
           wrapperClassName="min-w-full"
           selected={checkOut}
           onChange={(date) => setCheckOut(date)}
-          selectsStart
+          selectsEnd
           startDate={checkIn}
           endDate={checkOut}
           minDate={minDate}
           maxDate={maxDate}
         />
       </div>
-      <div
-        className="border
-       border-gray-300"
-      ></div>
-      <div>
+
+      <div className="d-flex flex-column">
         {" "}
         <span>Add Guests</span>
         <input
@@ -93,7 +78,7 @@ function Search() {
           placeholder="Add Guests"
           value={guestCount || ""}
           onChange={(e) => setGuestCount(parseInt(e.target.value))}
-          className="border-0 text-center"
+          className="border-0 guest p-1 w-100"
         />
       </div>
 
@@ -104,7 +89,7 @@ function Search() {
           backgroundColor: "#FF5A5F",
           border: "none",
           boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
-          padding: "10px 20px",
+          padding: "10px 10px",
         }}
       >
         <BiSearch size={18} />

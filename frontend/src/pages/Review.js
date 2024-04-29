@@ -49,7 +49,6 @@ function Review() {
   return (
     <>
       <div className="profile">
-        <ProfileNav />
         <h1 className="text-center">My Reviews</h1>
       </div>
 
